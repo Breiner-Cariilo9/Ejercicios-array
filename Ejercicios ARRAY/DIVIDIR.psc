@@ -1,4 +1,4 @@
-Algoritmo sumar
+Algoritmo CalcularNotas
 	Definir listaNumeros, i , notas Como Entero
 	Dimensionar listaNotas[3]
 	
