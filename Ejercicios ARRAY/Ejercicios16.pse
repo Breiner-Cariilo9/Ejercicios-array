@@ -1,0 +1,131 @@
+// EJERCICIO 16: DETERMINAR TOTAL A PAGAR POR SERVICIOS SUMANDO CONSUMOS
+
+Algoritmo TotalServicios
+    Definir servicios Como Caracter
+    Definir consumos Como Real
+    Definir tarifas Como Real
+    Definir totalesServicio Como Real
+    Definir i, cantidadServicios Como Entero
+    Definir totalGeneral Como Real
+    
+    Escribir "=== CÁLCULO TOTAL DE SERVICIOS PÚBLICOS ==="
+    
+    Repetir
+        Escribir "¿Cuántos servicios desea calcular?: "
+        Leer cantidadServicios
+        Si cantidadServicios <= 0 Entonces
+            Escribir "Debe calcular al menos un servicio."
+        FinSi
+    Hasta Que cantidadServicios > 0
+    
+    // Dimensionar arrays
+    Dimension servicios[cantidadServicios]
+    Dimension consumos[cantidadServicios]
+    Dimension tarifas[cantidadServicios]
+    Dimension totalesServicio[cantidadServicios]
+    
+    totalGeneral <- 0
+    
+    // Solicitar datos para cada servicio
+    Para i <- 0 Hasta cantidadServicios-1 Con Paso 1 Hacer
+        Escribir ""
+        Escribir "--- SERVICIO #", i+1, " ---"
+        Escribir "Tipo de servicio (ej: Electricidad, Agua, Gas): "
+        Leer servicios[i]
+        
+        Repetir
+            Escribir "Consumo de ", servicios[i], " (unidades): "
+            Leer consumos[i]
+            Si consumos[i] < 0 Entonces
+                Escribir "El consumo no puede ser negativo."
+            FinSi
+        Hasta Que consumos[i] >= 0
+        
+        Repetir
+            Escribir "Tarifa por unidad de ", servicios[i], ": $"
+            Leer tarifas[i]
+            Si tarifas[i] <= 0 Entonces
+                Escribir "La tarifa debe ser mayor que cero."
+            FinSi
+        Hasta Que tarifas[i] > 0
+        
+        // Calcular total del servicio
+        totalesServicio[i] <- consumos[i] * tarifas[i]
+        totalGeneral <- totalGeneral + totalesServicio[i]
+        
+        Escribir "Total ", servicios[i], ": ", consumos[i], " x $", tarifas[i], " = $", totalesServicio[i]
+    FinPara
+    
+    // Mostrar factura detallada
+    Escribir ""
+    Escribir "=== FACTURA DE SERVICIOS PÚBLICOS ==="
+    Escribir "========================================"
+    Para i <- 0 Hasta cantidadServicios-1 Con Paso 1 Hacer
+        Escribir i+1, ". ", servicios[i]
+        Escribir "   Consumo: ", consumos[i], " unidades"
+        Escribir "   Tarifa: $", tarifas[i], " por unidad"
+        Escribir "   Subtotal: $", totalesServicio[i]
+        Escribir ""
+    FinPara
+    
+    Escribir "========================================"
+    Escribir "TOTAL A PAGAR: $", totalGeneral
+    
+    // Calcular impuestos y cargos adicionales
+    Definir iva, cargoFijo, totalConImpuestos Como Real
+    iva <- totalGeneral * 0.19  // IVA del 19%
+    cargoFijo <- 5000  // Cargo fijo administrativo
+    totalConImpuestos <- totalGeneral + iva + cargoFijo
+    
+    Escribir ""
+    Escribir "=== DESGLOSE DE PAGOS ==="
+    Escribir "Subtotal servicios: $", totalGeneral
+    Escribir "IVA (19%): $", iva
+    Escribir "Cargo administrativo: $", cargoFijo
+    Escribir "----------------------------------------"
+    Escribir "TOTAL FINAL: $", totalConImpuestos
+    
+    // Análisis de consumo
+    Escribir ""
+    Escribir "=== ANÁLISIS DE CONSUMO ==="
+    
+    // Encontrar el servicio más costoso
+    Definir mayorCosto Como Real
+    Definir servicioMasCostoso Como Entero
+    mayorCosto <- totalesServicio[0]
+    servicioMasCostoso <- 0
+    
+    Para i <- 1 Hasta cantidadServicios-1 Con Paso 1 Hacer
+        Si totalesServicio[i] > mayorCosto Entonces
+            mayorCosto <- totalesServicio[i]
+            servicioMasCostoso <- i
+        FinSi
+    FinPara
+    
+    Escribir "💰 SERVICIO MÁS COSTOSO: ", servicios[servicioMasCostoso]
+    Escribir "    Monto: $", mayorCosto, " (", (mayorCosto/totalGeneral)*100, "% del total)"
+    
+    // Promedio por servicio
+    Escribir "📊 PROMEDIO POR SERVICIO: $", totalGeneral / cantidadServicios
+    
+    // Recomendaciones de ahorro
+    Escribir ""
+    Escribir "=== RECOMENDACIONES ==="
+    Si totalConImpuestos > 200000 Entonces
+        Escribir "💡 Factura alta. Considere medidas de ahorro energético."
+    SiNo
+        Si totalConImpuestos > 100000 Entonces
+            Escribir "💡 Consumo moderado. Mantenga hábitos eficientes."
+        SiNo
+            Escribir "✅ Consumo eficiente. ¡Buen trabajo!"
+        FinSi
+    FinSi
+    
+    // Opciones de pago
+    Escribir ""
+    Escribir "=== OPCIONES DE PAGO ==="
+    Escribir "1. Pago de contado (5% descuento): $", totalConImpuestos * 0.95
+    Escribir "2. Pago a 30 días: $", totalConImpuestos
+    Escribir "3. Pago a 60 días (3% recargo): $", totalConImpuestos * 1.03
+    
+FinAlgoritmo
